@@ -1,0 +1,79 @@
+body{
+    font-family: 'Lato', sans-serif;
+}
+.descriptor{
+    display:inline;
+}
+.weather-detail{
+    margin: 10px 0px;
+    background:url(https://s.yimg.com/os/mit/media/m/weather/images/icons/bkgnd/20n-255e28f.jpg);
+    background-size:cover;
+    background-position:center;
+}
+.weather-detail .current{
+    text-shadow:0px 2px 3px #555;
+}
+.weather-detail .prediction{
+    text-shadow:0px 2px 3px #CCC;
+}
+.weather-detail .additionalDetails{
+    font-size:20px;
+    text-align:center;
+    margin-top:25px;
+}
+.weather-detail .current > div{
+    color:white;
+    margin:5px;
+}
+.weather-detail .current .hero div,
+.weather-detail .current .temperature div{
+    text-align:center;
+}
+.weather-detail .current .country{
+    font-size:20px;
+}
+.weather-detail .current .temperature,
+.weather-detail .current .wi,
+.forecast-detail .wi{
+    font-size:60px;
+    
+}
+.weather-detail .current .temperature span{
+    font-size:30px;
+}
+.weather-detail .current .minMax div{
+    padding: 0 5px;
+}
+.forecast-detail{
+    text-align:center;
+    background:rgba(255,255,255,0.2);
+    padding:10px;
+}
+.forecast-detail .wi{
+    margin:10px;
+}
+.weather-detail .current .minMax .wi-sunrise,
+.weather-detail .current .minMax .wi-sunset{
+    font-size:20px;
+}
+
+@media screen and (min-width: 1160px) {
+    .weather-detail .current .temperature,
+    .weather-detail .current .wi,
+    .forecast-detail .wi{
+        font-size:80px;
+    }
+   
+}
+@media screen and (min-width: 992px) and (max-width: 1224px){
+     .descriptor{
+        display:none;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .weather-detail .additionalDetails{
+        text-align:right;
+        margin-top:0px;
+    }
+}

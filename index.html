@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html ng-app="aurora" >
+    <head>
+        <title>Aurora - Weather Information Tool</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/weather-icons/1.3.2/css/weather-icons.min.css" type="text/css" />
+        <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+        <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    </head>
+    <body ng-controller="appController">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Aurora</a>
+            </div>
+        
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              
+              <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                  <input type="text" class="form-control"  name="city" id="aurora-city" list="cityList" ng-model="cityName" placeholder="City Name" />
+                  <datalist id="cityList">
+                      <!--<option ng-repeat="city in cityList | filter:(cityName.length > 5 ? cityName : '') track by $index" value="{{city}}">-->
+                      <option ng-repeat="city in cityList | filter:cityName | limitTo:10 track by $index" value="{{city}}">
+                
+                    </datalist>
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="addCity()">Add</button>
+              </form>
+              
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#" ng-click="populateWeatherDetails('Hyderabad - India');">Hyderabad</a></li>
+                  <li><a href="#" ng-click="populateWeatherDetails('Bangalore - India');">Bangalore</a></li>
+                  <li><a href="#" ng-click="populateWeatherDetails('Seattle - United States');">Seattle</a></li>
+              </ul>
+              
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="container-fluid">
+            <div>
+                <h1>Weather Details</h1>
+                <article class="weather-detail row" ng-repeat="detail in weatherDetails ">
+                    <div class="current col-md-4 col-sm-8">
+                        <div class="country row">{{detail.location.city}} - {{detail.location.region}} - {{detail.location.country}} </div>
+                       
+                        <div class="condition row">{{detail.item.condition.text}} </div>
+                        <div class="hero row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="temperature row">{{detail.item.condition.temp}}&deg; <span>{{detail.units.temperature}}</span> </div>
+                                
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <i class="wi " ng-class="getConditionClass({{detail.item.condition.code}})"></i>
+                                
+                            </div>
+                        </div>
+                        <div class="hero row">
+                             <div class="col-md-6 col-xs-6">
+                                 <div class="row minMax">
+                                    <div class="col-md-6 col-xs-6">
+                                        <span class="descriptor">Min:</span> 
+                                    {{detail.item.forecast[0].low}}&deg; <span>{{detail.units.temperature}}</span> </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <span class="descriptor">Max:</span> 
+                                        {{detail.item.forecast[0].high}}&deg; <span>{{detail.units.temperature}}</span></div>
+                                </div>
+                             </div>
+                              <div class="col-md-6 col-xs-6">
+                                   <div class="row minMax">
+                                    <div class="col-md-6 col-xs-6">
+                                        <i class="wi wi-sunrise descriptor"></i>
+                                    {{detail.astronomy.sunrise}} </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <i class="wi wi-sunset descriptor"></i>
+                                        {{detail.astronomy.sunset}}</div>
+                                    </div>
+                             </div>
+                        </div>
+                        
+                    </div>
+                    <div class="current additionalDetails col-md-2 col-sm-4">
+                        <div class="row">Pressure: {{detail.atmosphere.pressure}} {{detail.units.pressure}}</div>
+                        <div class="row">Wind: {{detail.wind.speed}} {{detail.units.speed}}</div>
+                        <div class="row">Humidity: {{detail.atmosphere.humidity}}%</div>
+                    </div>
+                     <div class="prediction col-md-6 col-sm-12">
+                         <div class="row">
+                             <div class="forecast-detail col-sm-3 col-xs-6" ng-repeat="forecast in detail.item.forecast" ng-show="$index > 0">
+                                 <p>{{forecast.date}}</p>
+                                 <i class="wi " ng-class="getConditionClass({{forecast.code}})"></i>
+                                 <p>Min: {{forecast.low}}&deg; <span>{{detail.units.temperature}}</span></p>
+                                 <p>Max: {{forecast.high}}&deg; <span>{{detail.units.temperature}}</span></p>
+                             </div>
+                         </div>
+                     </div>
+                    
+                </article>
+                
+                <h1>Features</h1>
+                <ol>
+                    <li>Responsive Design</li>
+                    <li>Used AngularJS, HTML5, CSS3, Bootstrap and Weather Icons</li>
+                    
+                </ol>
+                
+                <h1>About Me</h1>
+                <ul>
+                    <li>My name is Rahul Jujarey</li>
+                    <li>You can find more details about me here -- <a href="http://rahuljujarey.in">http://rahuljujarey.in</a></li>
+                    <li>A backup copy of this exercise is available at <a href="https://aurora-jrahulroy.c9.io/index.html">https://aurora-jrahulroy.c9.io/index.html</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        
+        <script src="/scripts/app.js"></script>
+        
+    </body>
+</html>
